@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>끝말잇기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>끝말잇기</h1>
+
+      <form v-on:submit="onSubmitForm">
+        <input type="text" v-model="inputText" ref="answer" />
+        <button>입력!</button>
+      </form>
+      <ul v-for="word in words">
+        <li>{{word}}</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    const app = new Vue({
+      el: "#app",
+      data: {
+        words: ["수박"],
+        inputText: "",
+      },
+      methods: {
+        onSubmitForm(e) {
+          e.preventDefault();
+          if (
+            this.words[this.words.length - 1][
+              this.words[this.words.length - 1].length - 1
+            ] === this.inputText[0]
+          ) {
+            this.words = [...this.words, this.inputText];
+            this.inputText = "";
+            this.$refs.answer.focus();
+          } else {
+            alert("올바른 단어가 아닙니다.");
+            this.inputText = "";
+            this.$refs.answer.focus();
+          }
+        },
+      },
+    });
+  </script>
+</html>
