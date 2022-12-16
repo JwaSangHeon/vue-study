@@ -11,7 +11,9 @@
     <div id="root">
       <div>{{numOne}}곱하기 {{numTwo}}은?</div>
       <form v-on:submit="onSubmit">
-        <input type="number" v-model="inputText" /><button>입력!</button>
+        <input type="number" v-model="inputText" ref="answer" /><button>
+          입력!
+        </button>
       </form>
       <div id="result">{{message}}</div>
     </div>
@@ -33,9 +35,11 @@
             this.numOne = Math.ceil(Math.random() * 9);
             this.numTwo = Math.ceil(Math.random() * 9);
             this.inputText = "";
+            this.$refs.answer.focus();
           } else {
             this.message = "오답";
             this.inputText = "";
+            this.$refs.answer.focus();
           }
         },
       },
