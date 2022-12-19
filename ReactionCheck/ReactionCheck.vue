@@ -3,7 +3,6 @@
     <div id="screen" :class="state" @click="onClickScreen">
       {{ this.message }}
     </div>
-    <div></div>
     <div>
       <div>평균시간: {{ second }}</div>
       <button @click="onReset">리셋</button>
