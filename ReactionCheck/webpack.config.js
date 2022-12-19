@@ -14,9 +14,18 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: "vue-loader",
+        use: "vue-loader",
+      },
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"],
       },
     ],
+  },
+  devServer: {
+    devMiddleware: { publicPath: "/dist" },
+    static: { directory: path.resolve(__dirname) },
+    hot: true,
   },
   plugins: [new VueLoaderPlugin()],
   output: {
