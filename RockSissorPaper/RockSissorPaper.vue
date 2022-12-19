@@ -17,6 +17,18 @@ const rspCode = {
   가위: "-142px",
   보: "-284px",
 };
+const scores = {
+  가위: 1,
+  바위: 0,
+  보: -1,
+};
+
+const computerChoice = (imgCode) => {
+  return Object.entries(rspCode).find((v) => {
+    return v[1] === imgCode;
+  })[0];
+};
+
 let interval = null;
 export default {
   data() {
@@ -34,22 +46,42 @@ export default {
     },
   },
   methods: {
-    onClickButton(choice) {},
+    changeHand() {
+      interval = setInterval(() => {
+        if (this.imgCode === rspCode.바위) {
+          this.imgCode = rspCode.가위;
+        } else if (this.imgCode === rspCode.가위) {
+          this.imgCode = rspCode.보;
+        } else if (this.imgCode === rspCode.보) {
+          this.imgCode = rspCode.바위;
+        }
+      }, 100);
+    },
+    onClickButton(choice) {
+      clearInterval(interval);
+      const myScore = scores[choice];
+      const cpuScore = scores[computerChoice(this.imgCode)];
+      const diff = myScore - cpuScore;
+      if (diff === 0) {
+        this.result = "비겼습니다.";
+      } else if ([-1, 2].includes(diff)) {
+        this.result = "이겼습니다.";
+        this.score += 1;
+      } else {
+        this.result = "졌습니다.";
+        this.score -= 1;
+      }
+      setTimeout(() => {
+        this.changeHand();
+      }, 1000);
+    },
   },
   created() {
     console.log("created");
   },
   mounted() {
     console.log("mounted");
-    interval = setInterval(() => {
-      if (this.imgCode === rspCode.바위) {
-        this.imgCode = rspCode.가위;
-      } else if (this.imgCode === rspCode.가위) {
-        this.imgCode = rspCode.보;
-      } else if (this.imgCode === rspCode.보) {
-        this.imgCode = rspCode.바위;
-      }
-    }, 100);
+    this.changeHand();
   },
   updated() {
     console.log("updated");
