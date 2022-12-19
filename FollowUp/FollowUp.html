@@ -9,23 +9,33 @@
   </head>
   <body>
     <div id="app">
-      <h1>끝말잇기</h1>
-
-      <form v-on:submit="onSubmitForm">
-        <input type="text" v-model="inputText" ref="answer" />
-        <button>입력!</button>
-      </form>
-      <ul v-for="word in words">
-        <li>{{word}}</li>
-      </ul>
+      <follow-up start-word="박수"></follow-up>
+      <follow-up start-word="수박"></follow-up>
+      <follow-up start-word="라면"></follow-up>
     </div>
   </body>
   <script>
-    const app = new Vue({
-      el: "#app",
-      data: {
-        words: ["수박"],
-        inputText: "",
+    Vue.component("followUp", {
+      //전역 컴포넌트
+      template: `
+      <div>
+        <h1>끝말잇기</h1>
+        <form v-on:submit="onSubmitForm">
+          <input type="text" v-model="inputText" ref="answer" />
+          <button>입력!</button>
+        </form>
+        <ul v-for="word in words">
+          <li>{{word}}</li>
+        </ul>
+      </div>
+      `,
+      props: ["startWord"],
+      data() {
+        console.log(this);
+        return {
+          words: [this.startWord],
+          inputText: "",
+        };
       },
       methods: {
         onSubmitForm(e) {
@@ -45,6 +55,11 @@
           }
         },
       },
+    });
+  </script>
+  <script>
+    const app = new Vue({
+      el: "#app",
     });
   </script>
 </html>
