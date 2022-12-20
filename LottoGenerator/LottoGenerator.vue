@@ -46,7 +46,7 @@ export default {
       this.bonusNumber = null;
       this.winNumbers = generateNumber();
       this.winBalls = [];
-      this.showBalls();
+      // this.showBalls();
     },
     showBalls() {
       for (let i = 0; i < this.winNumbers.length - 1; i++) {
@@ -68,6 +68,14 @@ export default {
     timeout.forEach((t) => {
       clearTimeout(t);
     });
+  },
+  watch: {
+    winBalls(val, oldVal) {
+      console.log(val, oldVal);
+      if (val.length === 0) {
+        this.showBalls();
+      }
+    },
   },
 };
 </script>
