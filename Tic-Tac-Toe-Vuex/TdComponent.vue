@@ -1,7 +1,3 @@
-<template>
-  <td @click="onClickTd">{{ cellData }}</td>
-</template>
-
 <script>
 import {
   CLICK_CELL,
@@ -11,11 +7,20 @@ import {
   NO_WINNER,
 } from "./store";
 
+import { mapState } from "vuex";
 export default {
   props: {
-    cellData: String,
     rowIndex: Number,
     cellIndex: Number,
+  },
+  computed: {
+    ...mapState({
+      tableData: (state) => state.tableData,
+      turn: (state) => state.turn,
+      cellData(state) {
+        return state.tableData[this.rowIndex][this.cellIndex];
+      },
+    }),
   },
   methods: {
     onClickTd() {
@@ -83,3 +88,7 @@ export default {
   },
 };
 </script>
+
+<template>
+  <td @click="onClickTd">{{ cellData }}</td>
+</template>

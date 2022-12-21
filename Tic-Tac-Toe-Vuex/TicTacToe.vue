@@ -8,14 +8,21 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import store from "./store";
 import TableComponent from "./TableComponent.vue";
-import EventBus from "./EventBus";
 export default {
+  store,
   components: { TableComponent },
-  data() {
-    return {};
+  computed: {
+    ...mapState(["winner", "turn"]),
+    // winner() {
+    //   return this.$store.state.winner;
+    // },
+    // turn() {
+    //   return this.$store.state.turn;
+    // },
   },
-  computed: {},
 };
 </script>
 
